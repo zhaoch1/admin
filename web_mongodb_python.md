@@ -41,7 +41,7 @@ db.getCollection('#####').find({}).sort({date:-1})
 kw = db.表名.find_one({'_id': ObjectId(str(_id)))
 ```
 ### pymongo插入
-pymongo的数据格式是BSON格式
+mongodb的数据格式是BSON格式
 ```python
 #  生成唯一ID值的方法
 from bson import ObjectId

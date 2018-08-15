@@ -38,7 +38,10 @@ db.表明.find_one()
 db.getCollection('#####').find({}).sort({date:-1})
 
 # python中查询id值时可以通过前段传来的id值通过objectid对象来传递查询
-kw = db.表名.find_one({'_id': ObjectId(str(_id)))
+kw = db.表名.find_one({'_id': ObjectId(str(_id)})
+
+# 查询数组中是否包含
+kw = db.表名.find_one({'_id': ObjectId(str(_id),'manager':{'$in': '包含字段'}})
 ```
 ### pymongo插入
 mongodb的数据格式是BSON格式

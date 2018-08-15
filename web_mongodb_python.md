@@ -20,9 +20,25 @@ db.getCollection('#####').find({}).sort({date:-1})
 ```python
 # $match 匹配
 
-
+    alarm = db.alarm.aggregate([
+        {'$match': {'seat': seat}},
+        {'$group': {
+            #  按条件聚合查询
+            '_id': {'company_id': '$company_id', 'seat': '$seat', 'customer': '$customer', 'date': '$date'},
+            #  增加词组
+            'wangwang': {'$addToSet': '$wangwang'},
+            'alert_time': {'$addToSet': '$alert_time'},
+            'emotion': {'$addToSet': '$emotion'},
+            'keyword': {'$addToSet': '$keyword'},
+            'rule': {'$addToSet': '$rule'},
+        }},
+        # 从第几条开始
+        {'$skip': startIndex},
+        # 返回数量限制
+        {'$limit': limit}
+    ])
 
 ```
 
-```
+
 

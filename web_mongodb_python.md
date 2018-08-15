@@ -10,6 +10,9 @@ db.getCollection('表名').find()
 ```python
 db.表名.find()
 # 查询时，所有字段需要控制格式，字符串加引号
+
+# 排序
+db.getCollection('#####').find({}).sort({date:-1})
 ```
 
 #### 聚合查询 pymongo和源生通用

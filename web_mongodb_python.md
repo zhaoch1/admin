@@ -44,6 +44,8 @@ kw = db.表名.find_one({'_id': ObjectId(str(_id)})
 kw = db.表名.find_one({'_id': ObjectId(str(_id),'manager':{'$in': '包含字段'}})
 ```
 ### pymongo插入
+
+支持批量插入
 mongodb的数据格式是BSON格式
 ```python
 #  生成唯一ID值的方法

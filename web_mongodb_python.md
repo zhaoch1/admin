@@ -1,10 +1,7 @@
 ## mongodb
 
 #### 源生语句和pymongo查询的区别
-*源生查询*
-```
-db.getCollection('表名').find()
-```
+
  ### pymongo连接
 ```
 from config.config import Config
@@ -27,6 +24,50 @@ class Config:
 ```
 ### pymongo查询
 
+**比较运算查询**
+```
+# lt、lte、gt、gte、in、nin、ne
+db.customers.find({id:{$lte:100,$gte:50}})
+# $nin 和 $ne是低效查询器，最好不要单独使用
+```
+**连接运算查询**
+```
+# or and exists
+db.xxx.find({$or:[{id:1},{age:100}]})
+# 查询id不存在的文档
+db.xxx.find({id:{$exists:flase}})
+db.xxx.find({'id':null})  //同上功能
+```
+**嵌套查询**
+```
+#示例
+{
+    "_id" : ObjectId("5b66c09b7506cbadbc344c2e"),
+    "name" : "zhang",
+    "sex" : "不男不女",
+    "age" : ISODate("2018-08-15T17:05:26.974Z"),
+    "score" : 99.0,
+    "address" : "--",
+    "group" : [ 
+        {
+            "age" : 5,
+            "ss" : 1
+        }, 
+        {
+            "age" : 1
+        }
+    ]
+}
+
+# 查询
+db.getCollection('students').find({'group.0.age':5}) //单引号不要缺少
+# 不指定索引时，返回所有包括5的age文档
+db.xxx.find({'group.age':5})
+# 查询数组字段中的第一个或者最后一个
+db.getCollection('students').find({'group.age':5},{'group':{'$slice': 1}})
+
+```
+
 ```python
 db.表名.find()
 # 查询时，所有字段需要控制格式，字符串加引号，返回一个pymongo对象，做遍历查询时需要list做转换成列表
@@ -45,7 +86,10 @@ kw = db.表名.find_one({'_id': ObjectId(str(_id),'manager':{'$in': '包含字�
 ```
 ### pymongo插入
 
-支持批量插入
+**支持批量插入**
+```
+for(var i=1;i<11;i++) db.students.insert({id:i,name:'ss',age:100+i})
+```
 mongodb的数据格式是BSON格式
 ```python
 #  生成唯一ID值的方法
